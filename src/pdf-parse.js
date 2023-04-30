@@ -1,15 +1,14 @@
 import 'core-js';
-import fs from 'fs';
 import { PDFDocument, PDFPage, PDFLine, PDFItem } from './PDFDocument'
 
 /**
  * 
- * @param {string} pdfPath 
+ * @param {ArrayBuffer} pdfPath 
  * @returns {object} JSON
  */
-async function getPDFData (pdfPath) {
+async function getPDFData (pdfBuffer) {
     const pdfjsLib = require('pdfjs-dist/legacy/build/pdf')
-    const doc = await pdfjsLib.getDocument(fs.readFileSync(pdfPath)).promise;
+    const doc = await pdfjsLib.getDocument(pdfBuffer).promise;
 
     const pdf = {
         numPages: doc.numPages,

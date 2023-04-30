@@ -4,7 +4,7 @@
   "description": "Extract text from a PDF",
   "main": "./lib",
   "scripts": {
-    "build": "babel src -d lib & cp ./src/types/*.ts ./lib",
+    "build": "babel src -d lib & cp ./src/typeDeclarations/*.ts ./lib",
     "serve": "node lib/index.js",
     "start": "babel-node src/index.js"
   },
