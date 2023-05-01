@@ -77,7 +77,7 @@ class PDFLine {
      */
     get text() {
         let str = "";
-        this.items.forEach(i => str += i.str + (" "));
+        this.items.forEach(i => {str += i.str + (" ")});
         return str.trim();
     }
 }
@@ -136,7 +136,7 @@ class PDFDocument {
     get text() {
         return this.pages.flatMap(p => p.lines).map(l => {
             let str = "";
-            l.items.forEach(i => str += i.str + (" "));
+            l.items.forEach(i => {str += i.str + (" ")});
             return str.trim();
         });
     }
@@ -149,8 +149,8 @@ class PDFDocument {
             const lastLine = p.lines.length - 1;
             const lastItem = p.lines[lastLine].items.length - 1;
 
-            if(p.lines[lastLine].items.length == 1 
-                && p.lines[lastLine].items[lastItem].str == p.num) {
+            if(p.lines[lastLine].items.length === 1 
+                && p.lines[lastLine].items[lastItem].str === p.num) {
                 p.lines.pop();
             }
         });

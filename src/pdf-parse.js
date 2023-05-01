@@ -1,9 +1,8 @@
 import 'core-js';
-import { PDFDocument, PDFPage, PDFLine, PDFItem } from './PDFDocument'
+import { PDFDocument, PDFPage, PDFLine, PDFItem } from './PDFDocument';
 
 /**
- * 
- * @param {ArrayBuffer} pdfPath 
+ * @param {ArrayBuffer} pdfPath
  * @returns {object} JSON
  */
 async function getPDFData (pdfBuffer) {
@@ -15,7 +14,7 @@ async function getPDFData (pdfBuffer) {
         pages: []
     };
 
-    for (var i = 1; i <= doc.numPages; i++) {
+    for (let i = 1; i <= doc.numPages; i++) {
         const pagePDF = await doc.getPage(i);
 
         const viewport = pagePDF.getViewport({scale: 1.0});
@@ -47,8 +46,8 @@ async function getPDFData (pdfBuffer) {
                 y = trs[4];
             }
             return {
-                x: x,
-                y: y,
+                x,
+                y,
                 width: item.width,
                 height: item.height,
                 str: item.str.trim()
@@ -70,7 +69,7 @@ async function getPDFData (pdfBuffer) {
  */
 function GroupAndOrderItemsOfPage(page) {
     const itemsGroup = page.items.group(i => i.y);
-    let lines = [];
+    const lines = [];
     
     Object.getOwnPropertyNames(itemsGroup).forEach(line => {
         const lineOrderByX = itemsGroup[line].sort((a, b) => a.x - b.x);
@@ -88,15 +87,15 @@ function GroupAndOrderItemsOfPage(page) {
 async function parsePDF(pdfPath) {
     const pdfData = await getPDFData(pdfPath);
 
-    let pdfDoc = new PDFDocument();
+    const pdfDoc = new PDFDocument();
     pdfDoc.numPages = pdfData.numPages;
 
-    for(let page of pdfData.pages) {
-        let pdfPage = new PDFPage(page.num);
+    for(const page of pdfData.pages) {
+        const pdfPage = new PDFPage(page.num);
         const linesData = GroupAndOrderItemsOfPage(page);
-        for(let lineData of linesData) {
-            let line = new PDFLine(page.num);
-            for(let itemData of lineData) {
+        for(const lineData of linesData) {
+            const line = new PDFLine(page.num);
+            for(const itemData of lineData) {
                 line.addItem(
                     new PDFItem(
                         itemData.x, itemData.y,
